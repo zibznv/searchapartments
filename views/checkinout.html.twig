@@ -1,0 +1,106 @@
+{% extends 'template.html.twig' %}
+
+{% block linkcssfile %}
+
+    {{ parent() }}
+
+    <link rel="stylesheet" href="../webroot/css/checkin.css">
+	<link rel="stylesheet" href="../webroot/css/customerdata.css">
+	
+{% endblock %}
+
+{% block checkIn %}<!-- Блок формы авторизации! -->
+
+	<form action='/#' method='post' enctype='multipart/form-data' id='checkIn'>
+	
+		<fieldset><legend>Авторизация:</legend>
+			<label for='name1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User:</label>
+			<input type='text' size='20' maxlength='20' name='username' id='name1' placeholder='&nbsp;&nbsp;Input your user' value='{{ username }}'></br>
+			<label for='name2'>Password:</label>
+			<input type='password' size='20' maxlength='20' name='password' id='name2' placeholder='&nbsp;&nbsp;Input your password' value='{{ password }}'></br>
+			<input type='reset' class='user_but' name='resetform' value='Reset' title="Очистить форму запроса">&nbsp;&nbsp;&nbsp;
+			<input type='submit' class='user_but' name='loginreq' value='Login' title="Отправить запрос на авторизацию">
+		</fieldset>
+		<input type='hidden' name='hashText' value='{{ form_key }}'>
+		
+	</form>
+{% endblock %}
+
+{% block customerData %}<!-- Блок формы регистрации посетителя! -->
+
+	<form action='/#' method='post' enctype='multipart/form-data' id='customerData'>
+	
+		<fieldset><legend>Ввод данных посетителя:</legend>
+			{#<img src='{{ photoCustomer }}' id='name1' width='100px' height='120px' alt='Foto of customer.'>#}
+			<img src='../webroot/image/noname.png' id='name1' width='110px' height='130px' alt='Foto of customer.'>
+			<label for='name2'>ID customer:</label>
+			<input type='text' size='15' name='id' id='name2' value='{{ id }}'></br>
+			<label for='name3'>User:</label>
+			<input type='text' size='15' name='userCustomer' id='name3' placeholder='Input your user' value='{{ userCustomer }}' title='Имя пользователя в системе'></br>
+			<label for='name4'>Password:</label>
+			<input type='password' size='15' maxlength='25' name='passwordCustomer' id='name4' placeholder='Input your password' value='{{ passwordCustomer }}' title='Пароль пользователя в системе'></br>
+			<label for='name5'>Name:</label>
+			<input type='text' size='15' maxlength='25' name='nameCustomer' id='name5' placeholder='Input your name' value='{{ nameCustomer }}' title='Имя пользователя'></br>
+			<label for='name6'>Surname:</label>
+			<input type='text' size='15' maxlength='25' name='surnameCustomer' id='name6' placeholder='Input your surname' value='{{ surnameCustomer }}' title='Фамилия пользователя'></br>
+			<label for='name7'>Status customer:</label>
+			<select name="statusCustomer" size="1" id='name7' title='Статус клиента или партнера'></br>
+				{% for item in listStatusCustomer %}
+					{% if (item == activeStatusCustomer) %}
+						<option selected value="{{ item }}">{{ item }}</option>
+					{% else %} 
+						<option value="{{ item }}">{{ item }}</option>
+					{% endif %}
+				{% endfor %}
+			</select></br>
+			<label for='name8'>Type customer:</label>
+			<select name="typeCustomer" size="1" id='name8' title='Тип клиента или партнера'>
+				{% for item in typeListAccess %}
+					{% if (item == activeTypeCustomer) %}
+						<option selected value="{{ item }}">{{ item }}</option>
+					{% else %} 
+						<option value="{{ item }}">{{ item }}</option>
+					{% endif %}
+				{% endfor %}
+			</select></br>
+			<label for='name9'>Phone Customer:</label>
+			<input type='tel' size='30' maxlength='30' name='phoneCustomer' id='name9' placeholder='Input your phone' value='{{ phoneCustomer }}' title='Телефон пользователя'></br>
+			<label for='name10'>Email Customer:</label>
+			<input type='email' size='30' maxlength='30' name='emailCustomer' id='name10' placeholder='Input your Email' value='{{ emailCustomer }}' title='Email пользователя'></br>
+			<label for='name11'>Bankcard number:</label>
+			<input type='text' size='30' maxlength='25' name='bankcardNumber' id='name11' placeholder='Input bankcard number' value='{{ bankcardNumber }}' title='Номер банковской карты'></br>
+			<label for='name12'>Account balance:</label>
+			<input type='text' size='15' maxlength='10' name='accountBalance' id='name12' placeholder='Account balance' value='{{ accountBalance }}' title='Бухгалтерский баланс'></br>
+			<label for='name13'>Gender:</label>
+			<select name="genderCustomer" size="1"  id='name13' title='Пол клиента'>
+				{% for item in genderList %}
+					{% if (item == activeGenderCustomer) %}
+						<option selected value="{{ item }}">{{ item }}</option>
+					{% else %} 
+						<option value="{{ item }}">{{ item }}</option>
+					{% endif %}
+				{% endfor %}
+			</select></br>
+			<label for='name14'>BirthDate:</label>
+			<input type='date' size='15' id='name14' name='birthDate' placeholder='Birth Date' value='{{ birthDate }}' title="Дата рождения клиента">	</br>		
+			<label for='name15'>PhotoPath:</label>
+			<input type='text' size='30' maxlength='100' name='photoCustomer' id='name15' placeholder='Photo customer' value='{{ photoCustomer }}' title='Имя файла фото'></br>
+			<label for='name16'>Comment:</label>
+			<input type='text' size='30' maxlength='255' name='commentCustomer' id='name16' placeholder='Comment customer' value='{{ commentCustomer }}' title='Комментарии по клиенту'></br>
+		
+			<div id='but_panel'>
+				<input type='submit' class='user_but' name='edit_customer' value='Edit' title="Editing customer">
+				<input type='submit' class='user_but' name='delete_customer' value='Delete' title="Deleting customer">
+				<input type='submit' class='user_but' name='new_customer' value='Save new' title="Saving customer">
+				<input type='reset' class='user_but' name='reset_customer' value='Clear' title="Clearing the information entered by the user">
+			</div>
+			
+		</fieldset>
+		
+		<input type='hidden' name='hashText' value='{{ form_key }}'>
+		
+		<!--<input type="hidden" name="MAX_FILE_SIZE" value="4000000">
+		<input type='file' name='fotopath[]' multiple="multiple" id='name9'>-->
+		
+	</form>
+{% endblock %}

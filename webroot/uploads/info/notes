@@ -1,0 +1,171 @@
+﻿D:\OSPanel\modules\php\PHP-7.2\php.exe D:\OSPanel\domains\myshablon\composer.phar require twig/twig:1.*
+D:\OSPanel\modules\php\PHP-7.2\php.exe D:\OSPanel\domains\myshablon\composer.phar require phpmailer/phpmailer
+https://packagist.org/packages/twig/twig
+
+echo $twig->render('index.html.twig', array('name' => $SiteName));
+
+Мультиязічность в HTML
+<?= __('lng.test', 'default value')?>
+
+class Cat{
+    public static function assign($values) {
+        $class = new self;
+        foreach($values as $key => $value){
+            $this->{$key}= $value;
+        }
+        return $class;
+    }
+}
+$cat = Cat::assign($my_arr);*/
+
+$_SESSION['role'] Роль пользователя
+$_SESSION['security_form'] Объект visitor формы регистрации
+$_SESSION['post_array'] = $_POST; Передача Post массива через сессию новому роуту
+$_SESSION['files_array'] = $_FILES;// Передача Files массива через сессию новому роуту
+
+Загрузка файлов с сервера
+
+$file = '/path/to/file.jpg';
+header('Content-Type: image/jpeg');
+header('Content-Disposition: attachment; filename="file.jpg"');
+readfile($file);
+
+качает файлы любого расширения
+
+$file_name=$myrow['file'];
+  header("Content-Length: ".filesize($file_name));
+  header("Content-Disposition: attachment; filename=".$file_name); 
+  header("Content-Type: application/x-force-download; name=\"".$file_name."\"");
+ readfile($file_name);
+
+Отдаем файлы эффективно с помощью PHP
+Разработка веб-сайтов,
+PHP
+Если Вам потребовалось отдавать файлы не напрямую веб сервером, а с помощью PHP (например для сбора статистики скачиваний), прошу под кат.
+
+1. Используем readfile()
+
+Метод хорош тем, что работает с коробки. Надо только написать свою функцию отправки файла (немного измененный пример из официальной документации): 
+
+function file_force_download($file) {
+  if (file_exists($file)) {
+    // сбрасываем буфер вывода PHP, чтобы избежать переполнения памяти выделенной под скрипт
+    // если этого не сделать файл будет читаться в память полностью!
+    if (ob_get_level()) {
+      ob_end_clean();
+    }
+    // заставляем браузер показать окно сохранения файла
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename=' . basename($file));
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+    // читаем файл и отправляем его пользователю
+    readfile($file);
+    exit;
+  }
+}
+
+Таким способом можно отправлять даже большие файлы, так как PHP будет читать файл и сразу отдавать его пользователю по частям. В документации четко сказано, что readfile() не должен создавать проблемы с памятью.
+
+Особенности:
+Скрипт ждет пока весь файл будет прочитан и отдан пользователю.
+Файл читается в внутренний буфер функции readfile(), размер которого составляет 8кБ (спасибо 2fast4rabbit)
+
+2. Читаем и отправляем файл вручную
+
+Метод использует тот же Drupal при отправке файлов из приватной файловой системы (файлы недоступны напрямую по ссылкам):
+
+function file_force_download($file) {
+  if (file_exists($file)) {
+    // сбрасываем буфер вывода PHP, чтобы избежать переполнения памяти выделенной под скрипт
+    // если этого не сделать файл будет читаться в память полностью!
+    if (ob_get_level()) {
+      ob_end_clean();
+    }
+    // заставляем браузер показать окно сохранения файла
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename=' . basename($file));
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+    // читаем файл и отправляем его пользователю
+    if ($fd = fopen($file, 'rb')) {
+      while (!feof($fd)) {
+        print fread($fd, 1024);
+      }
+      fclose($fd);
+    }
+    exit;
+  }
+}
+
+Особенности:
+Скрипт ждет пока весь файл будет прочитан и отдан пользователю.
+Позволяет сэкономить память сервера
+
+3. Используем модуль веб сервера
+
+3a. Apache
+
+Модуль XSendFile позволяет с помощью специального заголовка передать отправку файла самому Apache. Существуют версии по Unix и Windows, под версии 2.0.*, 2.2.* и 2.4.*
+
+В настройках хоста нужно включить перехват заголовка с помощью директивы:
+XSendFile On
+
+Также можно указать белый список директорий, файлы в которых могут быть обработаны. Важно: если у Вас сервер на базе Windows путь должен включать букву диска в верхнем регистре.
+
+Описание возможных опций на сайте разработчика: https://tn123.org/mod_xsendfile/
+
+Пример отправки файла:
+
+function file_force_download($file) {
+  if (file_exists($file)) {
+    header('X-SendFile: ' . realpath($file));
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename=' . basename($file));
+    exit;
+  }
+}
+
+
+
+Больше информации на странице официальной документации
+
+Особенности:
+Скрипт завершается сразу после выполнения всех инструкций
+Физически файл отправляется модулем самого веб сервера, а не PHP
+Минимальное потребление памяти и ресурсов сервера
+Максимальное быстродействие
+
+
+Update: Хабраюзер ilyaplot дает дельный совет, что лучше слать не application/octet-stream, а реальный mime type файла. Например, это позволит браузеру подставить нужные программы в диалог сохранение файла.
+
+--------------------------------------------------------------------------------
+
+
+file_put_contents('/dev/null', file_get_contents('http://server.com/file.txt')); 
+
+
+--------------------------------------------------------------------------------
+
+https://php.ru/forum/threads/delaem-ssylku-dlja-skachivanija-fajla.8728/
+
+
+----------------------------------------------------------------------------------
+
+<?php
+echo mime_content_type('php.gif') . "\n";
+echo mime_content_type('test.php');
+?>
+Результат выполнения данного примера:
+
+image/gif
+text/plain
+

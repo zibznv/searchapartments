@@ -1,0 +1,88 @@
+form#customerData {
+	margin: 0;
+    padding: 10px;
+	display: inline-block;
+	background-color: silver;
+	box-shadow: 15px 15px 28px -6px rgba(255, 255, 255, 1);
+	border: 3px outset yellow;
+	border-radius: 10px;
+	/*width: 30%;*/
+	opacity: 0.95;
+	position: relative;
+	top: -350px;
+	left: 320px;
+}
+form#customerData fieldset {
+	margin: 0;
+    padding: 10px;
+	display: inline-block;
+	border-radius: 10px;
+	border: 1px solid green;
+	opacity: 1;
+}
+form#customerData fieldset legend {
+	color: red;
+	font-size: 13px;
+	font-style: italic;
+	font-weight: 550;
+	text-align: right;
+}
+form#customerData label {
+	display: inline-block;
+	width: 120px;
+	color: navy;
+	font-size: 15px;
+	font-style: italic;
+	font-weight: 600;
+}
+form#customerData input, form#customerData select {
+	display: inline-block;
+	background-color: beige;
+	padding: 3px;
+	border-radius: 5px;
+	color: black;
+	font-weight: 500;
+	font-size: 14px;
+}
+form#customerData img#name1 {
+	display: inline-block;
+	float: right;
+	margin: 3px;
+}
+form#customerData input.user_but {
+	background-color: aqua;
+	background: linear-gradient(0deg, rgba(0,128,128,1) 0%, rgba(255,255,255,1) 5%, rgba(5,193,255,1) 50%, rgba(255,255,255,1) 96%, rgba(0,87,87,1) 100%);
+	padding: 5px 14px;
+	font-size: 14px;
+	font-family: Old English Text MT;
+	color: navy;
+	font-weight: 580;
+	border-radius: 5px;
+	margin-right: 10px;
+}
+form#customerData input.user_but:hover {
+	background: lime;
+	color: blue;
+	box-shadow: 0px 0px 25px 5px yellow;
+	transition: all 0.4s ease;
+	text-align: center;
+	transform: scale(1.2);
+}
+form#customerData div#but_panel {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+form#customerData input:focus, form#customerData select:focus {
+	background: lightcyan;
+	box-shadow: 0px 0px 20px 3px yellow;
+	transform: scale(1.2);
+	color: brown;
+	font-weight: 500;
+	outline: none;
+}
+
+
+
+
+

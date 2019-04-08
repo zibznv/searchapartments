@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="Список, ключевых, слов, сайта"><!-- Keywords for your web page --> 
+		<meta name="description" content="Краткое описание сайта не более 200 символов с пробелами."><!-- Description for your web page --> 
+		<meta name="author" content="Имя кому принадлежит сайт."><!-- Author of page content -->
+		<meta name="Robots" content="all"><!-- Разрешает или запрещает индексировать и переходить по ссылкам.	Index - разрешает индексацию. Noindex - запрещает индексацию. Follow - разрешает переход по ссылкам. Nofollow - запрещает переход по ссылкам. All - тоже что content="index, follow" (принято по умолчанию). None - тоже что content="noindex, nofollow". Но может быть комбинации content="index,nofollow" и content="noindex,follow".	Этот мета-тег имеет приоритет над директивами(Allow и Disallow) из файла robots.txt. -->
+		<meta name="Document-state" content ="Dynamic"><!-- Static - статическая страница, индексировать только 1 раз. Dynamic - динамическая страница, которую нужно периодически переиндексировать. -->
+		<meta name="Revisit" content="10"><!-- Как часто эту страницу нужно переиндексировать, значение задается в днях. -->
+		<meta name="copyright" content="Студия дизайна"><!-- Тег указывает разработчика сайта. -->
+		<meta http-equiv="Pragma" content ="no-cache"><!-- Tег разрешает(cache) или запрещает(no-cache) кеширование страницы браузерами. Предназначен для документов, получаемых в результате работы скрипта. --> 
+		<meta http-equiv="cache-control" content="no-cache"><!-- Tег определяет действия кэша по отношению к данному документу. (public) -->
+		<meta http-equiv="expires" content="0"><!-- Tег принудительно заставляет браузер загружать ту или иную страницу не с жёсткого диска, а с сервера если указанное время еще не наступило. content="Sun, 24 jan 2010 12:28:36 GMT+03:00"-->	
+		<title>{{ site_name }}</title>
+		
+		{% block linkcssfile %}
+			<!-- Блок подключения стилевых файлов CSS -->
+			<link rel="stylesheet" href="../webroot/css/template.css">
+		{% endblock %}
+	</head>
+
+	<body id='backimg'>
+		<header>
+			<div class='headPanel' id='logoSite'><img src='../webroot/image/home.png' alt='Logo' height='80px' width='80px'></div>
+			<div class='headPanel' id='langSite'><ul>
+				<li><a href='/lang-ru'>ru</a></li>
+				<li><a href='/lang-uk'>uk</a></li>
+				<li><a href='/lang-en'>en</a></li>
+			</ul></div>
+			<div class='headPanel' id='titleSite'><h1>{{ site_name }}</h1></div>	
+			<div class='headPanel' id='customerSite'><img src='../webroot/image/noname.png' alt='Logo' height='80px' width='80px'></div>
+			<div class='headPanel' id='customerInfo'><ul>
+				<li>name:&nbsp;<span class='headinfo'>{{ nameCustomer }}</span></li>
+				<li>phone:&nbsp;<span class='headinfo'>{{ phoneCustomer }}</span></li>
+				<li>email:&nbsp;<span class='headinfo'>{{ emailCustomer }}</span></li>
+				<li>type:&nbsp;<span class='headinfo'>{{ typeAccess }}</span></li>
+			</ul></div>
+			
+		</header>
+		<nav>
+			<ul class='navmenu'>
+			{% block sitenavigation %}
+				<!-- Общие кнопки для всех режимов -->
+				<li><a href="/logIn">CheckIn</a></li>
+				<li><a href="/logOut">CheckOut</a></li>
+				<li><a href="/aboutUS">About US</a></li>
+				<li><a href="/siteRule">Rules</a></li>
+				{% if typeAccess == 'customer' %}
+					<!-- Дополнительные кнопки режима customer -->
+					<li><a href="#">Check In</a></li>
+					<li><a href="#">Guest Rules</a></li>
+				{% endif %}
+				{% if typeAccess == 'partner' %}
+					<!-- Дополнительные кнопки режима partner -->
+					<li><a href="#">Partner Rules</a></li>
+					<li><a href="#">Personal Area</a></li>
+				{% endif %}
+				{% if typeAccess == 'admin' %}
+					<!-- Дополнительные кнопки режима admin -->
+					<li><a href="#">Check In</a></li>
+					<li><a href="#">Guest Rules</a></li>
+					<li><a href="#">Customer Rules</a></li>
+					<li><a href="#">Personal Area</a></li>
+					<li><a href="#">Reports</a></li>
+					<li><a href="#">Setting</a></li>
+				{% endif %}
+				
+			{% endblock %}
+			</ul>
+		</nav>
+		
+		{% block searchAplication %}
+			{% if activeForm == 'searchAplication' %}
+				<form action='/handler_[999]' method='post' enctype='multipart/form-data' id='searchAplication_frm'>
+					<fieldset id='town'><legend>Город:</legend>
+						<select name="town" size="1" title='Список городов'><br>
+							{% for item in listTown %}
+								{% if (item == activeTown) %}
+									<option selected value="{{ item }}">{{ item }}</option>
+								{% else %} 
+									<option value="{{ item }}">{{ item }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</fieldset>
+					<fieldset id='dateArr'><legend>Дата приезда:</legend>
+						<input type='date' size='12' name='dateArrival' placeholder='Arrival Date' value='{{ dateArrival }}' title="Дата приезда">			
+					</fieldset>
+					<fieldset id='dateDep'><legend>Дата выезда:</legend>
+						<input type='date' size='12' name='dateDepartures' placeholder='Departures Date' value='{{ dateDepartures }}' title="Дата выезда">			
+					</fieldset>
+					<fieldset id='places'><legend>Мест:</legend>
+						<input type='number' size="5" min="1" max="9" step="1" name='seatCount' placeholder='Seat Count' value='{{ seatCount }}' title='Количество мест'>
+					</fieldset>
+					<fieldset id='rooms'><legend>Комнат:</legend>
+						<input type='number' size="5" min="1" max="9" step="1" name='roomCount' placeholder='Rooms Count' value='{{ roomCount }}' title='Количество комнат'>
+					</fieldset>
+					<fieldset id='typeapart'><legend>Тип номера:</legend>
+						<select name="typeApartment" size="1" title='Список типов номеров'><br>
+							{% for item in listType %}
+								{% if (item == activeType) %}
+									<option selected value="{{ item }}">{{ item }}</option>
+								{% else %} 
+									<option value="{{ item }}">{{ item }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</fieldset>
+					<fieldset id='actionchoice'><legend>Выбрать действие:</legend>
+						<input type='reset' class='user_but' name='resetform' value='Reset' title="Очистить форму запроса">
+						<input type='submit' class='user_but' name='sendreq' value='Send' title="Отправить запрос">
+					</fieldset>
+					<input type='hidden' name='hashText' value='{{ form_key }}'>
+					
+					{#<input type='text' size='12' name='typeApartment' placeholder='Type Apartment' value='{{ typeApartment }}' title="Тип номера">#}
+				
+				</form>
+			{% endif %}
+		{% endblock %}
+
+		{% if currentForm == 'checkIn' %}
+			{% block checkIn %}
+				<!-- Блок формы авторизации! -->
+				<!-- <form id="checkIn"></form> -->
+			{% endblock %}
+		{% endif %}
+
+		{% if currentForm == 'customerData' %}
+			{% block customerData %}
+				<!-- Блок формы регистрации посетителя! -->
+				<!-- <form id="customerData"></form> -->
+			{% endblock %}
+		{% endif %}
+
+		{% if currentForm == 'checkApartment' %}
+			{% block checkApartment %}
+				<!-- Блок формы регистрации апартаментов! -->
+				<!-- <form id="checkApartment"></form> -->
+			{% endblock %}
+		{% endif %}
+		
+		{% if currentForm == 'personalArea' %}
+			{% block personalArea %}
+				<!-- Блок формы личного кабинета! -->
+				<!-- <div id="personalArea"></div> -->
+			{% endblock %}
+		{% endif %}
+		
+		{% if currentForm == 'rules' %}
+			{% block rules %}
+				<!-- Блок отображения правил работы ресурса! -->
+				<!-- <div id="rules"></div> -->
+			{% endblock %}
+		{% endif %}
+		
+		{% if currentForm == 'newsBlock' %}
+			{% block newsBlock %}
+				<!-- Блок отображения новостей ресурса! -->
+				<!-- <div id="newsBlock"></div> -->
+			{% endblock %}
+		{% endif %}
+		
+		<footer>
+			<p>Программный комплекс « PROPERTY_RENTAL » &copy;. Версия программы: 001-122018.</p>
+		</footer>
+	
+		<script type='text/javascript' src="../webroot/js/comand.js"></script>
+		
+	</body>
+</html>

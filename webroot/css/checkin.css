@@ -1,0 +1,49 @@
+form#checkIn {
+	margin: 0;
+    padding: 10px;
+	background-color: silver;
+	box-shadow: 15px 15px 28px -6px rgba(255, 255, 255, 1);
+	border: 3px outset yellow;
+	border-radius: 10px;
+	width: 25%;
+	opacity: 0.8;
+	position: relative;
+	top: -250px;
+	left: 350px;
+}
+form#checkIn fieldset {
+	margin: 0;
+    padding: 6px;
+	border-radius: 10px;
+	border: 1px solid green;
+	text-align: center;
+	opacity: 1;
+}
+form#checkIn fieldset legend {
+	color: blue;
+	font-size: 13px;
+	font-style: italic;
+	font-weight: 600;
+	text-align: left;
+}
+form#checkIn fieldset input {
+	background-color: silver;
+	font-size: 17px;
+	color: black;
+	border: 2px solid transparent;
+	text-align: left;
+}
+form#checkIn fieldset input:focus {
+	outline: none;
+}
+form#checkIn fieldset label {
+	text-align: right;
+}
+form#checkIn input[type='reset'] {
+	font-weight: 500;
+	color: blue;
+}
+form#checkIn input[type='submit'] {
+	font-weight: 500;
+	color: blue;
+}

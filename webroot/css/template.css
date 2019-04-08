@@ -1,0 +1,200 @@
+body {
+	margin: 0;
+	padding: 0;
+	
+	/*width: 100%;
+	height: 100%;
+	background-color: snow;
+	background-image: url("../image/apartments/image14.jpg");
+	background-size: cover;
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-attachment: fixed;*/
+	
+	background: url("../image/apartments/image14.jpg") no-repeat center center fixed;
+	background-size: cover;
+	
+	transition: all 2.5s ease-in-out;
+}
+header {
+	background-color: transparent;/*khaki*/
+	box-sizing: border-box;
+	height: 80px;
+	width: 100%;
+	position: absolute;
+	top: -75px;
+	
+}
+header:hover {
+	top: 0;
+	position: relative;
+	background-color: khaki;
+	transition: all 0.5s ease-in-out;
+}
+header {
+	display: flex;
+	justify-content: left;
+}
+div.headPanel {
+	display: inline-block;
+	margin-right: 10px;
+	background-color: grey;
+}
+div#langSite ul {
+	margin: 0;
+	padding: 0;
+	margin-top: 1px;
+	
+}
+div#langSite ul li {
+	list-style: none;
+	background-color: aqua;
+	background: linear-gradient(0deg, rgba(0,128,128,1) 0%, rgba(255,255,255,1) 5%, rgba(5,193,255,1) 50%, rgba(255,255,255,1) 96%, rgba(0,87,87,1) 100%);
+	padding: 4px;
+	font-size: 14px;
+	color: navy;
+	font-weight: 600;
+	border-radius: 5px;
+	margin: 1px solid grey;
+	text-decoration: none;
+	margin-bottom: 1px;
+}
+div#customerInfo ul {
+	margin: 0;
+	padding: 0;
+	margin-top: 2px;
+}
+div#customerInfo ul li {
+	list-style: none;
+	font-size: 14px;
+	color: navy;
+	font-weight: 600;
+	margin-bottom: 3px;
+	
+}
+span.headinfo {
+	color: purple;
+	font-style: italic;
+	font-size: 15px;
+}
+div#titleSite h1{
+	background-color: yellow;
+	margin: 0 30px;
+	padding: 0;
+	line-height: 80px;
+	font-family: Old English Text MT;
+}
+nav {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+}
+nav ul.navmenu {
+	background-color: grey;
+	list-style: none;
+	display: flex;
+	justify-content: left;
+	margin: 0;
+	padding: 0;
+	margin-top: 5px;
+}
+nav ul.navmenu li {
+	margin-right: 5px;
+}
+nav ul.navmenu li a {
+	display: block;
+	background-color: aqua;
+	background: linear-gradient(0deg, rgba(0,128,128,1) 0%, rgba(255,255,255,1) 5%, rgba(5,193,255,1) 50%, rgba(255,255,255,1) 96%, rgba(0,87,87,1) 100%);
+	padding: 6px 12px;
+	font-size: 14px;
+	color: navy;
+	font-weight: 600;
+	border-radius: 5px;
+	margin: 1px solid grey;
+	text-decoration: none;
+	/*text-transform: uppercase;*/
+}
+nav ul.navmenu li a:hover{
+	background: lime;
+	color: blue;
+	box-shadow: 1px 5px 10px -5px black;
+	transition: all 0.4s ease;
+	text-align: center;
+	transform: scale(1.1);
+}
+form#searchAplication_frm {
+	margin: 0;
+    padding: 10px;
+	background-color: silver;
+	box-shadow: 15px 15px 28px -6px rgba(255, 255, 255, 1);
+	border: 3px outset yellow;
+	border-radius: 10px;
+	width: 14%;
+	opacity: 0.9;
+	position: relative;
+	top: 100px;
+	left: 50px;
+}
+form#searchAplication_frm fieldset {
+	margin: 0;
+    padding: 3px;
+	border-radius: 10px;
+	border: 1px solid green;
+	text-align: center;
+	opacity: 1;
+}
+form#searchAplication_frm fieldset legend {
+	color: blue;
+	font-size: 13px;
+	font-style: italic;
+	font-weight: 600;
+	text-align: left;
+}
+form#searchAplication_frm fieldset input, form#searchAplication_frm fieldset select {
+	background-color: silver;
+	font-size: 17px;
+	color: black;
+	border: 2px solid transparent;
+	text-align: center;
+}
+form#searchAplication_frm fieldset input:focus, form#searchAplication_frm fieldset select:focus {
+	outline: none;
+}
+form#searchAplication_frm input[type='reset'] {
+	font-weight: 600;
+	color: purple;
+}
+form#searchAplication_frm input[type='submit'] {
+	font-weight: 600;
+	color: purple;
+}
+footer {
+	display: block;
+	background-color: silver;
+	box-sizing: border-box;
+	height: 30px;
+	width: 100%;
+	position: fixed;
+	bottom: -25px;
+	left: 0;
+}
+footer p {
+    margin: 0;
+    padding: 0;
+	line-height: 30px;
+    color: blue;
+    text-align: right;
+    font-size: 14px;
+}
+footer:hover {
+	bottom: 0;
+	transition: all 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
+
